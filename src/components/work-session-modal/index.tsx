@@ -100,6 +100,7 @@ const WorkSessionModal = (props: Props) => {
             <FormControl>
               <FormLabel>Name:</FormLabel>
               <Input
+                autoFocus
                 defaultValue={workSession?.name}
                 onChange={(e) => setName(e.currentTarget.value)}
                 onKeyDown={(e) =>

@@ -26,9 +26,10 @@ import { WorkSession } from '~types';
 type Props = {
   session: WorkSession;
   onDelete: () => void;
+  onUpdate: (updatedSession: WorkSession) => void;
 };
 
-const WorkSessionItem = ({ session, onDelete }: Props) => {
+const WorkSessionItem = ({ session, onDelete, onUpdate }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const {
@@ -137,6 +138,7 @@ const WorkSessionItem = ({ session, onDelete }: Props) => {
           workSession={session}
           isOpen={isOpen}
           onClose={onClose}
+          onUpdate={onUpdate}
         />
       )}
     </>

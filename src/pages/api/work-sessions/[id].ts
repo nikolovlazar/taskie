@@ -13,13 +13,13 @@ const handler: NextApiHandler = async (req, res) => {
     return;
   }
 
-  const session = req.body as WorkSession;
-
   if (method === 'POST') {
     // Update
+    const session = JSON.parse(req.body) as WorkSession;
     const { data, error } = await supabase
       .from('work_sessions')
-      .update(session);
+      .update(session)
+      .match({ id: session.id });
 
     if (error || !data || data.length === 0) {
       res.status(500);

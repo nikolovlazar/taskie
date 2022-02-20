@@ -44,6 +44,16 @@ const Home = ({ workSessions }: Props) => {
               <LinkOverlay href={`sessions/${session.id}`}>
                 <WorkSessionItem
                   session={session}
+                  onUpdate={(updatedSession) => {
+                    const sessionIndex = sessions.findIndex(
+                      (s) => s.id === updatedSession.id
+                    );
+
+                    const updatedSessions = [...sessions];
+                    updatedSessions[sessionIndex] = updatedSession;
+
+                    setSessions(updatedSessions);
+                  }}
                   onDelete={() =>
                     setSessions((oldSessions) =>
                       oldSessions.filter((s) => s.id !== session.id)
