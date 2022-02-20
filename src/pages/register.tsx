@@ -49,7 +49,7 @@ const Register = () => {
       w="100vw"
       h="100vh"
     >
-      <VStack spacing={6} bg="white" p={10} rounded="md" shadow="md">
+      <VStack spacing={6} bg="white" p={10} rounded="md" shadow="md" minW="lg">
         <Heading size="md">Register</Heading>
         <FormControl>
           <FormLabel>Email</FormLabel>
