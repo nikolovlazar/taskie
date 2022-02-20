@@ -15,7 +15,7 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { FiEdit3 } from 'react-icons/fi';
 import { RiDeleteBinLine } from 'react-icons/ri';
 
@@ -40,7 +40,9 @@ const WorkSessionItem = ({ session, onDelete }: Props) => {
 
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const handleDelete = async () => {
+  const handleDelete = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
     setIsDeleting(true);
     const res = await deleteSession(session.id);
     setIsDeleting(false);
@@ -82,14 +84,20 @@ const WorkSessionItem = ({ session, onDelete }: Props) => {
           <IconButton
             aria-label={`Edit ${session.name}`}
             icon={<FiEdit3 />}
-            onClick={onOpen}
+            onClick={(e) => {
+              e.preventDefault();
+              onOpen();
+            }}
           />
           <Popover isOpen={isDeleteOpen} onClose={onDeleteClose}>
             <PopoverTrigger>
               <IconButton
                 aria-label={`Delete ${session.name}`}
                 icon={<Icon as={RiDeleteBinLine} color="red.500" />}
-                onClick={onDeleteOpen}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onDeleteOpen();
+                }}
               />
             </PopoverTrigger>
             <PopoverContent>
@@ -101,7 +109,14 @@ const WorkSessionItem = ({ session, onDelete }: Props) => {
               </PopoverBody>
               <PopoverFooter>
                 <HStack justifyContent="flex-end">
-                  <Button onClick={onDeleteClose}>Cancel</Button>
+                  <Button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onDeleteClose();
+                    }}
+                  >
+                    Cancel
+                  </Button>
                   <Button
                     variant="solid"
                     colorScheme="red"
