@@ -5,20 +5,22 @@ import {
   Container,
   Heading,
   HStack,
+  IconButton,
   LinkBox,
   LinkOverlay,
   Text,
+  Tooltip,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
+import { ReactElement, useState } from 'react';
+import { FiPlus } from 'react-icons/fi';
 
 import { supabase } from '~supabase';
 import { WorkSession } from '~types';
 import WorkSessionModal from '~components/work-session-modal';
 import { getUser } from '~utils/users';
 import WorkSessionItem from '~components/work-session-item';
-import { ReactElement, useState } from 'react';
-import useWorkSessions from '~hooks/work-sessions';
 import Layout from '~components/layout';
 
 type Props = {
@@ -32,7 +34,16 @@ const Home = ({ workSessions }: Props) => {
   return (
     <Container py={10} w="full" maxW="container.lg">
       <VStack spacing={6} alignItems="flex-start">
-        <Heading>Work sessions:</Heading>
+        <HStack w="full" justifyContent="space-between">
+          <Heading>Work sessions:</Heading>
+          <Tooltip label="Create new work session">
+            <IconButton
+              aria-label="Create new work session"
+              icon={<FiPlus />}
+              onClick={onOpen}
+            />
+          </Tooltip>
+        </HStack>
         {sessions?.map((session) => (
           <NextLink key={session.id} passHref href={`sessions/${session.id}`}>
             <LinkBox
@@ -64,7 +75,6 @@ const Home = ({ workSessions }: Props) => {
             </LinkBox>
           </NextLink>
         ))}
-        <Button onClick={onOpen}>Create new work session</Button>
 
         {isOpen && (
           <WorkSessionModal
